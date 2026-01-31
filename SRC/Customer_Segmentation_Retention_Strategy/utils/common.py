@@ -1,9 +1,10 @@
 import os
 import yaml
-from Customer_Segmentation_Retention_Strategy import logger
+from Customer_Segmentation_Retention_Strategy.utils.logger import logger
 import json
 import joblib
-from box import ConfigBox, BoxValueError
+from box import ConfigBox
+from box.exceptions import BoxValueError
 from ensure import ensure_annotations
 from pathlib import Path
 from typing import Any
