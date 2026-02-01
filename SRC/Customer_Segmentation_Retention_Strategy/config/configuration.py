@@ -37,7 +37,7 @@ class ConfigurationManager:
 
         return data_ingestion_config
     
-    def get_data_transformation_config(self, model: str) -> DataTransformationConfig:
+    def get_data_transformation_config(self) -> DataTransformationConfig:
         config = self.config.data_transformation
 
         root_dir_path = self.project_root / self.config.artifacts_root / "data_transformation"
@@ -45,6 +45,7 @@ class ConfigurationManager:
 
    
         return DataTransformationConfig(
-            source_file_path=self.project_root / Path(config.source_file_path),
-            root_dir=root_dir_path
+        root_dir=self.project_root / Path(config.root_dir),
+        source_file_path=self.project_root / Path(config.source_file_path),
+        data_path=self.project_root / Path(config.root_dir) / "data"
         )

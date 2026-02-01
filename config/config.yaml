@@ -3,7 +3,8 @@ artifacts_root: artifacts
 data_ingestion:
   root_dir: artifacts/data_ingestion
   local_data_file: data/raw/online_retail_II.xlsx
+  output_file: artifacts/data_ingestion/online_retail_II.xlsx
 
 data_transformation:
   root_dir: artifacts/data_transformation
-  source_file: artifacts/data_ingestion/data/raw/online_retail_II.xlsx
+  source_file_path: artifacts/data_ingestion/online_retail_II.xlsx

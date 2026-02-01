@@ -14,7 +14,7 @@ class DataIngestionConfig:
 
 @dataclass(frozen=True)
 class DataTransformationConfig:
-    source_file_path: str
+    source_file_path: Path
     root_dir: Path
     data_path: Path
 

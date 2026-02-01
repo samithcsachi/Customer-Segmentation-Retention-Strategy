@@ -5,6 +5,7 @@ from Customer_Segmentation_Retention_Strategy.utils.common import get_size
 from Customer_Segmentation_Retention_Strategy.entity.config_entity import DataTransformationConfig
 from pathlib import Path
 import pandas as pd
+import numpy as np
 from scipy.stats import linregress
 from datetime import timedelta
 
@@ -19,14 +20,19 @@ class DataTransformation:
 
     def load_preprocess_data(self):
         logger.info("Loading and preprocessing data...")
-        df = pd.read_excel(self.config.source_file_path)
-        df = pd.concat(pd.read_excel("online_retail_II.xlsx", sheet_name=None).values())
+        excel_path = self.config.source_file_path
+        
+
+        sheets = pd.read_excel(excel_path, sheet_name=None)
+        df = pd.concat(sheets.values(), ignore_index=True)
+        logger.info(f"Loaded data shape: {df.shape}")
 
 
         # Handling the missing values
         df["Description"] = df["Description"].fillna("Unknown")
         df = df.dropna(subset=['Customer ID'])
-        df = df.drop_duplicates(inplace=True)
+        df.drop_duplicates(inplace=True)
+        
 
 
         # Removing the anomalous stock codes
@@ -46,6 +52,8 @@ class DataTransformation:
 
         df.reset_index(drop=True, inplace=True)
 
+        logger.info(f"Preprocessed data shape: {df.shape}")
+
         logger.info("Loading and preprocessing data completed...")
 
         return df
@@ -58,12 +66,13 @@ class DataTransformation:
 
         df = df.copy()
         
-
+        # Convert 'InvoiceDate' to datetime
         df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'])
         
-
+        # Calculate 'Total_Spend'
         df['Total_Spend'] = df['Quantity'] * df['Price']
-        
+
+        df['Transaction_Status'] = np.where(df['Invoice'].astype(str).str.startswith('C'), 'Cancelled', 'Completed')
 
         max_date = df['InvoiceDate'].max()
         snapshot_date = max_date - timedelta(days=180)
@@ -142,12 +151,46 @@ class DataTransformation:
         numeric_cols = customer_data.select_dtypes(include=['number']).columns
         customer_data[numeric_cols] = customer_data[numeric_cols].fillna(0)
         customer_data = customer_data[customer_data['Monetary'] >= 0].copy()
+        df = customer_data
 
         logger.info("Feature engineering completed.")
 
-        return customer_data
+        return df
 
 
-    def transform_data(self) -> str:
+    def data_transformation(self):
+
+        logger.info("Starting data transformation pipeline...")
         df = self.load_preprocess_data()
         df = self.feature_engineering(df)
+        
+
+        os.makedirs(self.config.root_dir, exist_ok=True)
+        df.to_csv(self.config.root_dir / "customer_data.csv", index=False)
+
+
+        logger.info("Performing train-test split...")
+        
+
+        split_ratio = getattr(self.config, 'train_split_ratio', 0.80)
+        split_index = int(len(df) * split_ratio)
+
+        
+        train = df.iloc[:split_index].copy()
+        test = df.iloc[split_index:].copy()
+
+        
+        
+        train.to_csv(self.config.root_dir / "train.csv", index=False)
+        test.to_csv(self.config.root_dir / "test.csv", index=False)
+
+        logger.info("=== Train-Test Split Summary ===")
+        logger.info(f"Total samples: {len(df):,}")
+        logger.info(f"Training samples: {len(train):,} ({len(train)/len(df)*100:.1f}%)")
+        logger.info(f"Test samples: {len(test):,} ({len(test)/len(df)*100:.1f}%)")
+
+               
+       
+        logger.info("Data transformation pipeline completed successfully!")
+
+        return train, test
