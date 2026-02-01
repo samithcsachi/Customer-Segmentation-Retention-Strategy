@@ -10,12 +10,20 @@ class DataIngestionConfig:
     root_dir: Path
     local_data_file: Path
 
+@dataclass(frozen=True)
+class DataValidationConfig:
+    
+    root_dir: Path
+    STATUS_FILE: str
+    source_file_path : Path
+    all_schema: dict
+
 
 
 @dataclass(frozen=True)
 class DataTransformationConfig:
-    source_file_path: Path
+    
     root_dir: Path
-    data_path: Path
+    source_file_path: Path
 
 

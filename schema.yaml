@@ -1,0 +1,9 @@
+COLUMNS:
+  Invoice: object
+  StockCode: object
+  Description: object
+  Quantity: int64
+  InvoiceDate: datetime64[us]
+  Price: float64
+  Customer ID: float64
+  Country: str
