@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from Customer_Segmentation_Retention_Strategy.constants import  *
 from Customer_Segmentation_Retention_Strategy.utils.common import read_yaml, create_directories
-from Customer_Segmentation_Retention_Strategy.entity.config_entity import (DataIngestionConfig)
+from Customer_Segmentation_Retention_Strategy.entity.config_entity import (DataIngestionConfig, DataTransformationConfig)
 
 class ConfigurationManager:
     def __init__(
@@ -30,8 +30,21 @@ class ConfigurationManager:
         create_directories([str(root_dir_path)])
         
         data_ingestion_config = DataIngestionConfig(
-            root_dir= str(root_dir_path),
-            local_data_file_reading=config.local_data_files.readings,
-            local_data_file_users=config.local_data_files.users,
+            root_dir=root_dir_path,
+            local_data_file=self.project_root / Path(config.local_data_file),
+
         )
+
         return data_ingestion_config
+    
+    def get_data_transformation_config(self, model: str) -> DataTransformationConfig:
+        config = self.config.data_transformation
+
+        root_dir_path = self.project_root / self.config.artifacts_root / "data_transformation"
+        create_directories([str(root_dir_path)])
+
+   
+        return DataTransformationConfig(
+            source_file_path=self.project_root / Path(config.source_file_path),
+            root_dir=root_dir_path
+        )

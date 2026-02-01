@@ -8,5 +8,14 @@ from typing import Dict
 @dataclass(frozen=True)
 class DataIngestionConfig:
     root_dir: Path
-    local_data_file_reading: Path
-    local_data_file_users: Path
+    local_data_file: Path
+
+
+
+@dataclass(frozen=True)
+class DataTransformationConfig:
+    source_file_path: str
+    root_dir: Path
+    data_path: Path
+
+

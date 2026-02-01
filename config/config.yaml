@@ -1,6 +1,9 @@
 artifacts_root: artifacts
+
 data_ingestion:
   root_dir: artifacts/data_ingestion
-  local_data_files:
-    readings: data/raw/online_retail_II.xlsx
-    users: data/raw/online_retail_II.xlsx
+  local_data_file: data/raw/online_retail_II.xlsx
+
+data_transformation:
+  root_dir: artifacts/data_transformation
+  source_file: artifacts/data_ingestion/data/raw/online_retail_II.xlsx
