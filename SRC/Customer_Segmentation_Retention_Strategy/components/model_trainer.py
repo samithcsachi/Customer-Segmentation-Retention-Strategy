@@ -1,5 +1,4 @@
 import os
-
 from Customer_Segmentation_Retention_Strategy.utils.logger import logger
 from Customer_Segmentation_Retention_Strategy.utils.common import get_size
 from Customer_Segmentation_Retention_Strategy.entity.config_entity import ModelTrainerConfig
@@ -8,6 +7,7 @@ import numpy as np
 import pandas as pd 
 import xgboost as xgb
 from sklearn.metrics import roc_auc_score, accuracy_score
+import joblib
 
 class ModelTrainer:
     def __init__(self, config:ModelTrainerConfig):
@@ -19,10 +19,10 @@ class ModelTrainer:
 
         logger.info(f"Feature preparation started:")
 
-        X_train = train_data.drop(columns=[self.config.target_columns], errors =ignore)
-        X_test = test_data.drop(columns=[self.config.target_columns], errors =ignore)
-        y_train = train_data[self.config.target_columns]
-        y_test = test_data[self.config.target_columns]
+        X_train = train_data.drop(columns=[self.config.target_column], errors="ignore")
+        X_test = test_data.drop(columns=[self.config.target_column], errors="ignore")
+        y_train = train_data[self.config.target_column]
+        y_test = test_data[self.config.target_column]
 
 
         logger.info(f"Feature preparation completed:")
@@ -45,10 +45,27 @@ class ModelTrainer:
         logger.info(f"Accuracy: {accuracy:.4f}")
         logger.info(f"ROC-AUC: {roc_auc:.4f}")
 
+
+        predictions_df = pd.DataFrame({
+            "y_true": y_test.values,
+            "y_pred": y_pred,
+            "y_pred_proba": y_pred_proba
+        })
+
+        predictions_path = os.path.join(
+            self.config.root_dir,
+            "predictions.csv"
+        )
+
+        predictions_df.to_csv(predictions_path, index=False)
+        logger.info(f"Predictions saved at: {predictions_path}")
+
         return {
             "accuracy": accuracy,
-            "roc_auc": roc_auc
+            "roc_auc": roc_auc,
+            "predictions_path": predictions_path
         }
+
             
 
 
@@ -95,9 +112,7 @@ class ModelTrainer:
                             )
             xgb_model.fit(X_train, y_train)
 
-            metrics = self.evaluate(xgb_model, X_test, y_test)
-
-            predictions = self.evaluate(X_train, X_test, y_train, y_test)
+            metrics = self.evaluate(model=xgb_model,X_test=X_test,y_test=y_test)
             
             self.save_model_artifacts(xgb_model)
 
@@ -106,8 +121,7 @@ class ModelTrainer:
 
             logger.info("Model training completed successfully!")
 
-            return {'model': xgb_model,
-                    'predictions':predictions}
+            return {"model": xgb_model,"metrics": metrics}
 
 
         except Exception as e:
