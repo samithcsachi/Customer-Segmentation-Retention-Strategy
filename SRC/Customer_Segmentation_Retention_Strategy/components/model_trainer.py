@@ -58,6 +58,7 @@ class ModelTrainer:
         )
 
         predictions_df.to_csv(predictions_path, index=False)
+        
         logger.info(f"Predictions saved at: {predictions_path}")
 
         return {
