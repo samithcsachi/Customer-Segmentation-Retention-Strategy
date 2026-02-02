@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from Customer_Segmentation_Retention_Strategy.constants import  *
 from Customer_Segmentation_Retention_Strategy.utils.common import read_yaml, create_directories
-from Customer_Segmentation_Retention_Strategy.entity.config_entity import (DataIngestionConfig,DataValidationConfig, DataTransformationConfig, ModelTrainerConfig)
+from Customer_Segmentation_Retention_Strategy.entity.config_entity import (DataIngestionConfig,DataValidationConfig, DataTransformationConfig, ModelTrainerConfig, ModelEvaluationConfig)
 
 class ConfigurationManager:
     def __init__(
@@ -108,3 +108,20 @@ class ConfigurationManager:
 
         )
         return model_trainer_config
+    
+
+    def get_model_evaluation_config(self) -> ModelEvaluationConfig:
+        config = self.config.model_evaluation
+        schema = self.schema.TARGET_COLUMN
+
+        root_dir_path = self.project_root / self.config.artifacts_root / "model_evaluation"
+        create_directories([config.root_dir])
+
+        model_evaluation_config = ModelEvaluationConfig(
+            root_dir=config.root_dir,
+            test_data_path=config.test_data_path,
+            model_path=config.model_path,
+            report_path=config.report_path,
+            target_column=schema.name
+        )
+        return model_evaluation_config

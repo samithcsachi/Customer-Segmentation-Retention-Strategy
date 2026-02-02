@@ -47,3 +47,12 @@ class ModelTrainerConfig:
 
     eval_metric: str
 
+
+@dataclass(frozen=True)
+class ModelEvaluationConfig:
+    root_dir: Path
+    test_data_path: Path
+    model_path: Path
+    report_path: Path  
+    target_column: str
+

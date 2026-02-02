@@ -8,6 +8,7 @@ import pandas as pd
 import xgboost as xgb
 from sklearn.metrics import roc_auc_score, accuracy_score
 import joblib
+from datetime import datetime
 
 class ModelTrainer:
     def __init__(self, config:ModelTrainerConfig):
@@ -70,13 +71,15 @@ class ModelTrainer:
             
 
 
-    def save_model_artifacts(self, model):
+    def save_model_artifacts(self, model,X_train):
         os.makedirs(self.config.root_dir, exist_ok=True)
         
         model_artifacts = {
                     "model": model,
+                    "model_type": "XGBClassifier",
                     "target_column": self.config.target_column,
-                    "model_type": "XGBClassifier"
+                    "feature_columns": list(X_train.columns),
+                    "timestamp": datetime.now().isoformat()
                 }
         
         model_path = os.path.join(self.config.root_dir, self.config.model_name)
@@ -115,7 +118,7 @@ class ModelTrainer:
 
             metrics = self.evaluate(model=xgb_model,X_test=X_test,y_test=y_test)
             
-            self.save_model_artifacts(xgb_model)
+            self.save_model_artifacts(xgb_model,X_train)
 
 
 
