@@ -13,3 +13,9 @@ data_validation:
 data_transformation:
   root_dir: artifacts/data_transformation
   source_file_path: artifacts/data_ingestion/online_retail_II.xlsx
+
+model_trainer:
+  root_dir: artifacts/model_trainer
+  train_data_path: artifacts/data_transformation/train.csv
+  test_data_path: artifacts/data_transformation/test.csv
+  model_name: model.joblib

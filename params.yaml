@@ -1,0 +1,16 @@
+MODEL:
+  type: XGBClassifier
+  save_path: models/xgb_churn_model.pkl
+
+XGBOOST:
+  objective: binary:logistic
+  n_estimators: 300
+  learning_rate: 0.01
+  max_depth: 3
+  subsample: 0.7
+  colsample_bytree: 1.0
+  min_child_weight: 1
+  random_state: 42
+
+TRAINING:
+  eval_metric: auc

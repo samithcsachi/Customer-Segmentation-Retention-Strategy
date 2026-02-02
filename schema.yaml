@@ -7,3 +7,6 @@ COLUMNS:
   Price: float64
   Customer ID: float64
   Country: str
+
+TARGET_COLUMN:
+  name: Churn

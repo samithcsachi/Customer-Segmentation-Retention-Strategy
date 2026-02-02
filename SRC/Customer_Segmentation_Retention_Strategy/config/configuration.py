@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from Customer_Segmentation_Retention_Strategy.constants import  *
 from Customer_Segmentation_Retention_Strategy.utils.common import read_yaml, create_directories
-from Customer_Segmentation_Retention_Strategy.entity.config_entity import (DataIngestionConfig,DataValidationConfig, DataTransformationConfig)
+from Customer_Segmentation_Retention_Strategy.entity.config_entity import (DataIngestionConfig,DataValidationConfig, DataTransformationConfig, ModelTrainerConfig)
 
 class ConfigurationManager:
     def __init__(
@@ -16,12 +16,12 @@ class ConfigurationManager:
 
    
         config_filepath = self.project_root / config_filepath
-        #params_filepath = self.project_root / params_filepath
+        params_filepath = self.project_root / params_filepath
         schema_filepath = self.project_root / schema_filepath
 
      
         self.config = read_yaml(config_filepath)
-        #self.params = read_yaml(params_filepath)
+        self.params = read_yaml(params_filepath)
         self.schema = read_yaml(schema_filepath)
         
 
@@ -75,3 +75,36 @@ class ConfigurationManager:
 
    
         return data_transformation_config
+
+
+    def get_model_trainer_config(self) -> ModelTrainerConfig: 
+        config = self.config.model_trainer
+        params = self.params
+        xgb_params = params.XGBOOST
+        training_params = params.TRAINING
+        schema = self.schema.TARGET_COLUMN
+
+        root_dir_path = self.project_root / self.config.artifacts_root / "model_trainer"
+        create_directories([str(root_dir_path)])
+
+        model_trainer_config = ModelTrainerConfig(
+        root_dir=self.project_root / Path(config.root_dir),
+        train_data_path=config.train_data_path,
+            test_data_path=config.test_data_path,
+            data_transformation_dir=self.config.data_transformation.root_dir, 
+            model_name=config.model_name,
+            target_column=schema.name,
+            
+            objective=xgb_params.objective,
+            n_estimators=xgb_params.n_estimators,
+            learning_rate=xgb_params.learning_rate,
+            max_depth=xgb_params.max_depth,
+            subsample=xgb_params.subsample,
+            colsample_bytree=xgb_params.colsample_bytree,
+            min_child_weight=xgb_params.min_child_weight,
+            random_state=xgb_params.random_state,
+
+            eval_metric=training_params.eval_metric
+
+        )
+        return model_trainer_config
