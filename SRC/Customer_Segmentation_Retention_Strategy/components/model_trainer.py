@@ -20,8 +20,10 @@ class ModelTrainer:
 
         logger.info(f"Feature preparation started:")
 
-        X_train = train_data.drop(columns=[self.config.target_column], errors="ignore")
-        X_test = test_data.drop(columns=[self.config.target_column], errors="ignore")
+        columns_to_remove = ['Customer ID']
+
+        X_train = train_data.drop(columns=columns_to_remove + [self.config.target_column], errors="ignore")
+        X_test = test_data.drop(columns=columns_to_remove + [self.config.target_column], errors="ignore")
         y_train = train_data[self.config.target_column]
         y_test = test_data[self.config.target_column]
 

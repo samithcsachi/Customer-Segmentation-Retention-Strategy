@@ -34,7 +34,7 @@ class ModelEvaluation:
         return model_artifacts
 
     def load_test_data(self):
-      
+        columns_to_drop = ['Customer ID']
         if not os.path.exists(self.config.test_data_path):
             raise FileNotFoundError(f"Test data not found: {self.config.test_data_path}")
         
@@ -55,7 +55,7 @@ class ModelEvaluation:
             elif isinstance(test_data, pd.DataFrame):
 
                 if self.config.target_column in test_data.columns:
-                    X_test = test_data.drop(columns=[self.config.target_column])
+                    X_test = test_data.drop(columns=columns_to_drop + [self.config.target_column])
                     y_test = test_data[self.config.target_column]
                     return X_test, y_test
                 else:
@@ -65,7 +65,9 @@ class ModelEvaluation:
         
    
         if self.config.target_column in test_data.columns:
-            X_test = test_data.drop(columns=[self.config.target_column])
+            
+
+            X_test = test_data.drop(columns=columns_to_drop + [self.config.target_column])
             y_test = test_data[self.config.target_column]
             logger.info(f"Split test data - X: {X_test.shape}, y: {y_test.shape}")
             return X_test, y_test
