@@ -12,6 +12,8 @@ project_name = 'Customer_Segmentation_Retention_Strategy'
 list_of_files = [
 
     f"SRC/{project_name}/__init__.py",
+    f"SRC/{project_name}/api/__init__.py",
+    f"SRC/{project_name}/api/main.py",
     f"SRC/{project_name}/components/__init__.py",
     f"SRC/{project_name}/components/data_ingestion.py",
     f"SRC/{project_name}/components/data_validation.py",
@@ -20,6 +22,7 @@ list_of_files = [
     f"SRC/{project_name}/components/model_evaluation.py",
     f"SRC/{project_name}/components/model_monitoring.py",
     f"SRC/{project_name}/components/model_maintenance.py",
+    f"SRC/{project_name}/data/raw,
     f"SRC/{project_name}/utils/__init__.py",
     f"SRC/{project_name}/utils/common.py",
     f"SRC/{project_name}/config/__init__.py",
@@ -37,6 +40,8 @@ list_of_files = [
     f"SRC/{project_name}/constants/__init__.py",
     "config/config.yaml",
     "params.yaml",
+    "schema.yaml",
+    "app.py",
     "research/01_exploratory_analysis_and_business_insights.ipynb",
     "research/02_customer_churn_prediction_model.ipynb",
     

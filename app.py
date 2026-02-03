@@ -19,14 +19,7 @@ def main():
     st.write("Predict whether a customer is likely to **churn or stay**, "
         "based on behavioral and transaction-level features."
         )
-
-
-
-
-
-
     st.header("Input Customer Features")
-
 
     Frequency = st.number_input("Frequency", min_value=0.0, value=10.0)
     Monetary = st.number_input("Monetary", min_value=0.0, value=10000.0)
