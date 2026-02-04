@@ -8,7 +8,7 @@ import pandas as pd
 
 
 def load_model():
-    model_path = "artifacts/model_trainer/model.joblib"
+    model_path = "model/model.joblib"
     model_dict = joblib.load(model_path)
     return model_dict['model']  
 
