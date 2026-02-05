@@ -7,7 +7,7 @@ STAGE_NAME = "Model Trainer Stage"
 
 class ModelTrainerTrainingPipeline:
 
-    def _init__(self):
+    def __init__(self):
         pass
 
     def main(self):

@@ -56,3 +56,17 @@ class ModelEvaluationConfig:
     report_path: Path  
     target_column: str
 
+@dataclass(frozen=True)
+class ModelMonitoringConfig:
+    root_dir: Path
+    baseline_data_path: Path
+    production_data_path: Path
+    psi_threshold: float
+    drift_report_path: Path
+
+@dataclass(frozen=True)
+class ModelMaintenanceConfig:
+    root_dir: Path
+    model_registry_path: Path
+    retrain_on_drift: bool
+    retrain_mode: str

@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from Customer_Segmentation_Retention_Strategy.constants import  *
 from Customer_Segmentation_Retention_Strategy.utils.common import read_yaml, create_directories
-from Customer_Segmentation_Retention_Strategy.entity.config_entity import (DataIngestionConfig,DataValidationConfig, DataTransformationConfig, ModelTrainerConfig, ModelEvaluationConfig)
+from Customer_Segmentation_Retention_Strategy.entity.config_entity import (DataIngestionConfig,DataValidationConfig, DataTransformationConfig, ModelTrainerConfig, ModelEvaluationConfig,ModelMonitoringConfig,ModelMaintenanceConfig)
 
 class ConfigurationManager:
     def __init__(
@@ -125,3 +125,36 @@ class ConfigurationManager:
             target_column=schema.name
         )
         return model_evaluation_config
+    
+
+    def get_model_monitoring_config(self) -> ModelMonitoringConfig:
+        config = self.config.model_monitoring
+
+        root_dir_path = self.project_root / self.config.artifacts_root / "model_monitoring"
+        create_directories([str(root_dir_path)])
+
+        model_monitoring_config = ModelMonitoringConfig(
+            root_dir=root_dir_path,
+            baseline_data_path=self.project_root / Path(config.baseline_data_path),
+            production_data_path=self.project_root / Path(config.production_data_path),
+            psi_threshold=config.psi_threshold,
+            drift_report_path=self.project_root / Path(config.drift_report_path)
+        )
+
+        return model_monitoring_config
+    
+
+    def get_model_maintenance_config(self) -> ModelMaintenanceConfig:
+        config = self.config.model_maintenance
+
+        root_dir_path = self.project_root / self.config.artifacts_root / "model_maintenance"
+        create_directories([str(root_dir_path)])
+
+        model_maintenance_config = ModelMaintenanceConfig(
+            root_dir=root_dir_path,
+            model_registry_path=self.project_root / Path(config.model_registry_path),
+            retrain_on_drift=config.retrain_on_drift,
+            retrain_mode=config.retrain_mode
+        )
+
+        return model_maintenance_config

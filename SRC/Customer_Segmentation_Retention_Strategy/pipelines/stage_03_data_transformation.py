@@ -7,7 +7,7 @@ STAGE_NAME = "Data Transformation Stage"
 
 class DataTransformationTrainingPipeline:
 
-    def _init__(self):
+    def __init__(self):
         pass
 
     def main(self):
