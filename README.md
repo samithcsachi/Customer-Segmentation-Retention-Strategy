@@ -18,7 +18,7 @@ Docker Hub Link: - [https://hub.docker.com/r/samithc/customer-segmentation-app](
 
 Articles - 
 -  Medium :
-  - Analysis: - [https://medium.com/towards-artificial-intelligence/customer-segmentation-and-retention-strategy-using-transactional-data-9b74e0d27e35](https://medium.com/towards-artificial-intelligence/customer-segmentation-and-retention-strategy-using-transactional-data-9b74e0d27e35)   
+  -- Analysis: - [https://medium.com/towards-artificial-intelligence/customer-segmentation-and-retention-strategy-using-transactional-data-9b74e0d27e35](https://medium.com/towards-artificial-intelligence/customer-segmentation-and-retention-strategy-using-transactional-data-9b74e0d27e35)   
 
 ## Authors
 
