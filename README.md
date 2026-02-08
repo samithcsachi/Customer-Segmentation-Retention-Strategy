@@ -37,6 +37,7 @@ Articles -
 - [Run Locally](#run-locally)
 - [Explore the notebook](#explore-the-notebook)
 - [Contribution](#contribution)
+- [Repository structure](#repository-structure)
 - [License](#license)
 
 ## Problem Statement
@@ -291,6 +292,106 @@ GitHub : [https://github.com/samithcsachi/Customer-Segmentation-Retention-Strate
 ## Contribution
 
 Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change or contribute.
+
+## Repository structure
+
+```
+Customer-Segmentation-Retention-Strategy/
+├── .gitignore
+├── .python-version
+├── Dockerfile
+├── LICENSE
+├── README.md
+├── SRC/
+│   └── Customer_Segmentation_Retention_Strategy/
+│       ├── __init__.py
+│       ├── api/
+│       │   └── main.py
+│       ├── components/
+│       │   ├── __init__.py
+│       │   ├── data_ingestion.py
+│       │   ├── data_transformation.py
+│       │   ├── data_validation.py
+│       │   ├── model_evaluation.py
+│       │   ├── model_maintenance.py
+│       │   ├── model_monitoring.py
+│       │   └── model_trainer.py
+│       ├── config/
+│       │   ├── __init__.py
+│       │   └── configuration.py
+│       ├── constants/
+│       │   └── __init__.py
+│       ├── entity/
+│       │   ├── __init__.py
+│       │   └── config_entity.py
+│       ├── pipelines/
+│       │   ├── __init__.py
+│       │   ├── stage_01_data_ingestion.py
+│       │   ├── stage_02_data_validation.py
+│       │   ├── stage_03_data_transformation.py
+│       │   ├── stage_04_model_trainer.py
+│       │   ├── stage_05_model_evaluation.py
+│       │   ├── stage_06_model_monitoring.py
+│       │   └── stage_07_model_maintenance.py
+│       └── utils/
+│           ├── __init__.py
+│           ├── common.py
+│           └── logger.py
+├── app.py
+├── artifacts/
+│   ├── data_ingestion/
+│   │   └── online_retail_II.xlsx
+│   └── data_transformation/
+│       ├── customer_data.csv
+│       ├── test.csv
+│       └── train.csv
+├── assets/
+│   ├── Bubble Plot Recency vs Frequency sized by Monetary.png
+│   ├── Churn Distribution.png
+│   ├── Churn Rate by RFM Segment Heatmap.png
+│   ├── Churn Rate vs Avg Monetary Value by RFM Segment Bubble Plot.png
+│   ├── Customer Behavior by Spending Tier.png
+│   ├── Customer Churn Prediction.gif
+│   ├── Customer Churn Prediction.jpg
+│   ├── Monthly Active Customers.png
+│   ├── Monthly Unique Sales (Invoices).png
+│   ├── One-time vs Repeat Customers Pie Chart.png
+│   ├── Percentage of Missing Values.png
+│   ├── Purchase Frequency Distribution (Repeat Customers Only).png
+│   ├── Purchase Regularity Distribution by RFM Segment.png
+│   ├── RFM Heatmap Recency vs Frequency Score Counts.png
+│   ├── RFM Segment Analysis.png
+│   ├── Recency Distribution and Segments.png
+│   ├── Recency and Avg Days Between Purchases Histograms.png
+│   ├── Recency vs Monetary Value Scatter Plot.png
+│   ├── Revenue and Customer Count by Percentile.png
+│   ├── Spending Trend vs Churn Scatter Plot.png
+│   ├── Spending Trends by RFM Segment (Positive Growth Only).png
+│   ├── Top 10 Most Frequent Stock Codes.png
+│   ├── Top 30 Most Frequent Descriptions.png
+│   ├── Total Revenue by Customer Percentile.png
+│   └── Total Revenue by RFM Segment.png
+├── config/
+│   ├── __init__.py
+│   └── config.yaml
+├── data/
+│   └── raw/
+│       └── online_retail_II.xlsx
+├── main.py
+├── model/
+│   └── model.joblib
+├── params.yaml
+├── pyproject.toml
+├── research/
+│   ├── 01_exploratory_analysis_and_business_insights.ipynb
+│   ├── 02_customer_churn_prediction_model.ipynb
+│   ├── cleaned_data.csv
+│   ├── customer_data.csv
+│   └── online_retail_II.xlsx
+├── schema.yaml
+├── template.py
+└── uv.lock
+```
 
 ## License
 
