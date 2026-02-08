@@ -341,10 +341,21 @@ Customer-Segmentation-Retention-Strategy/
 ├── artifacts/
 │   ├── data_ingestion/
 │   │   └── online_retail_II.xlsx
-│   └── data_transformation/
-│       ├── customer_data.csv
-│       ├── test.csv
-│       └── train.csv
+│   ├── data_transformation/
+│   |   ├── customer_data.csv
+│   |   ├── test.csv
+│   |   └── train.csv
+|   ├── data_validation/
+|   |   └── status.txt
+|   ├── model_trainer/
+|   |   ├── model.joblib
+|   |   └── predictions.csv
+|   ├── model_evaluation/
+|   |   └── evaluation_results.json
+|   ├── model_monitoring/
+|   |   └── drift_report.json
+|   └──  mmodel_maintenance/
+|       └── model_registry.json
 ├── assets/
 │   ├── Bubble Plot Recency vs Frequency sized by Monetary.png
 │   ├── Churn Distribution.png
