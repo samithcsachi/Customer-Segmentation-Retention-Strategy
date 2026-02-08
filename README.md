@@ -31,7 +31,7 @@ Articles -
 - [Problem Statement](#problem-statement)
 - [Tech Stack](#tech-stack)
 - [Data source](#data-source)
-- [Quick glance at the results](#quick-glance-at-the-results)
+- [Glance at the results](#Glance-at-the-results)
 - [Limitation and what can be improved](#limitation-and-what-can-be-improved)
 - [Lessons Learned and Recommendations](#lessons-learned-and-recommendations)
 - [Run Locally](#run-locally)
@@ -71,7 +71,7 @@ The dataset contains 1067371 entries and has 8 columns. This is a short descript
 - CustomerID : Customer number. A 5-digit integral number uniquely assigned to each customer.
 - Country : Country name. The name of the country where a customer resides.
 
-## Quick glance at the results
+## Glance at the results
 
 ![Demo](assets/Customer%20Churn%20Prediction.jpg)
 
